@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
 
 /**
@@ -63,8 +64,32 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false);
+        // dummy data
+        myMovie[] movies = new myMovie[] {
+                new myMovie("https://www.petdrugsonline.co.uk/images/page-headers/cats-master-header"),
+                new myMovie("https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg"),
+                new myMovie("https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx"),
+                new myMovie("https://d1ra4hr810e003.cloudfront.net/media/27FB7F0C-9885-42A6-9E0C19C35242B5AC/0/D968A2D0-35B8-41C6-A94A0C5C5FCA0725/F0E9E3EC-8F99-4ED8-A40DADEAF7A011A5/dbe669e9-40be-51c9-a9a0-001b0e022be7/thul-IMG_2100.jpg")
+        };
+
+        // create MovieAdapter
+        MovieAdapter adapter = new MovieAdapter(
+                getActivity(),
+                R.layout.fragment_movie_grid_item,
+                R.id.gridview_item_imageview,
+                movies);
+
+        // get fragment_movie view
+        View rootView = inflater.inflate(R.layout.fragment_movie, container, false);
+
+        // get reference to gridview and attach MovieAdapter to it
+        GridView gridView = (GridView) rootView.findViewById(R.id.movie_gridview);
+
+        // attach MovieAdapter to gridview
+        gridView.setAdapter(adapter);
+
+        // return the inflated rootView
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

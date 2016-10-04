@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="me.aaronyoung.popular_movies.MovieFragment">
 
-
     <GridView
         android:id="@+id/movie_gridview"
         android:layout_width="match_parent"
