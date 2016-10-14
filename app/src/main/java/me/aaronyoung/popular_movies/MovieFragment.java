@@ -12,8 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -139,11 +147,11 @@ public class MovieFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private class FetchMovieTask extends AsyncTask<String, Void, myMovie[]> {
+    private class FetchMovieTask extends AsyncTask<String, Void, ArrayList<myMovie>> {
         private final String LOG_TAG = FetchMovieTask.class.getSimpleName();
 
         @Override
-        protected myMovie[] doInBackground(String... params) {
+        protected ArrayList<myMovie> doInBackground(String... params) {
             String sortOrder = "top_rated";
 
             if (params.length != 0) {
@@ -158,18 +166,6 @@ public class MovieFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String movieJsonStr = null;
 
-            // Construct the URL for the MovieDbApi query
-
-            final String FORECAST_BASE_URL = "http://api.themoviedb.org/3/movie/" + sortOrder;
-            final String APPID_PARAM = "api_key";
-
-            Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                    .appendQueryParameter(APPID_PARAM, BuildConfig.MOVIE_DB_API_KEY)
-                    .build();
-            Log.v(LOG_TAG, builtUri.toString());
-
-            /*
-
             try {
                 // Construct the URL for the MovieDbApi query
 
@@ -181,8 +177,6 @@ public class MovieFragment extends Fragment {
                         .build();
 
                 URL url = new URL(builtUri.toString());
-
-
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -210,7 +204,7 @@ public class MovieFragment extends Fragment {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-                forecastJsonStr = buffer.toString();
+                movieJsonStr = buffer.toString();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attemping
@@ -228,12 +222,59 @@ public class MovieFragment extends Fragment {
                     }
                 }
             }
-            */
+            // parse movieJsonStr
+
+            try {
+                return getMovieDataFromJson(movieJsonStr);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
+            }
+
+            // This will only happen if there was an error getting or parsing the forecast.
             return null;
         }
 
+        private ArrayList<myMovie> getMovieDataFromJson (String movieJsonStr) throws JSONException {
+            // Parse JSON string into JSON Object
+            JSONObject movieJson = new JSONObject(movieJsonStr);
+            // get results JSON Array
+            JSONArray results = movieJson.getJSONArray("results");
+
+            // Define JSON Object Key strings
+            final String POSTER_PATH = "poster_path";
+            final String OVERVIEW = "overview";
+            final String RELEASE_DATE = "release_date";
+            final String TITLE = "original_title";
+            final String VOTE_AVG = "vote_average";
+
+            // Create ArrayList of myMovie to be returned
+            ArrayList<myMovie> movies = new ArrayList<>();
+
+            for (int i = 0; i < results.length(); i++) {
+                // Get the JSONObject at that index in the results array
+                JSONObject movieEntry = results.getJSONObject(i);
+
+                // Create new myMovie Object
+                myMovie movie = new myMovie();
+
+                // Set myMovie data
+                movie.setPosterPath(movieEntry.getString(POSTER_PATH));
+                movie.setOverview(movieEntry.getString(OVERVIEW));
+                movie.setReleaseDate(movieEntry.getString(RELEASE_DATE));
+                movie.setTitle(movieEntry.getString(TITLE));
+                movie.setVoteAvg(movieEntry.getDouble(VOTE_AVG));
+
+                // add movie to arraylist
+                movies.add(movie);
+            }
+
+            // return list of myMovie objects
+            return movies;
+        }
+
         @Override
-        protected void onPostExecute(myMovie[] result) {
+        protected void onPostExecute(ArrayList<myMovie> result) {
             if (result != null) {
                 movieList.clear(); // clear movie data
                 for(myMovie movie : result) {
@@ -241,8 +282,6 @@ public class MovieFragment extends Fragment {
                 }
                 // New data is back from the server.  Hooray!
             }
-            // notify Adapter that data has changed
-            movieAdapter.notifyDataSetChanged();
         }
     }
 }

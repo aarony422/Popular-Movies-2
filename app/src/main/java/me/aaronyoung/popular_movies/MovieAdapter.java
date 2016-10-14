@@ -52,10 +52,9 @@ public class MovieAdapter extends ArrayAdapter<myMovie> {
         myMovie movie = movies.get(position);
         // Update ImageView with movie poster image using Picasso
         Picasso.with(context)
-                .load(movie.getPosterURL())
+                .load(movie.getPoster_path())
                 //.placeholder(R.drawable.movie)
                 .into(holder.posterImage);
-        //holder.posterImage.setImageResource(R.drawable.movie);
 
         return gridViewEntry;
     }

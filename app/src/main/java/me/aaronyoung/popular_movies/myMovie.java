@@ -8,15 +8,29 @@ import android.os.Parcelable;
  */
 
 public class myMovie implements Parcelable{
-    private String posterURL;
+    private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185/";
+    private String poster_path;
+    private String overview;
+    private String release_date;
+    private String title;
+    private double vote_average;
 
-    public myMovie(String url) {
+    public myMovie() {
         super();
-        this.posterURL = url;
+        poster_path = "";
+        overview = "";
+        release_date = "";
+        title = "";
+        vote_average = 0.0;
     }
 
     private myMovie(Parcel in) {
-        posterURL = in.readString();
+        IMAGE_BASE_URL = in.readString();
+        poster_path = in.readString();
+        overview = in.readString();
+        release_date = in.readString();
+        title = in.readString();
+        vote_average = in.readDouble();
     }
 
     @Override
@@ -24,19 +38,40 @@ public class myMovie implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(posterURL);
+        parcel.writeString(IMAGE_BASE_URL);
+        parcel.writeString(poster_path);
+        parcel.writeString(overview);
+        parcel.writeString(release_date);
+        parcel.writeString(title);
+        parcel.writeDouble(vote_average);
     }
 
-    public void setPosterURL(String url) {
-        this.posterURL = url;
+    public void setPosterPath(String url) {
+        this.poster_path = url;
     }
 
-    public String getPosterURL() {
-        return this.posterURL;
+    public String getPoster_path() {
+        return IMAGE_BASE_URL + this.poster_path;
     }
+
+    public void setOverview(String overview) { this.overview = overview; }
+
+    public String getOverview() { return this.overview; }
+
+    public void setReleaseDate(String date) { this.release_date = date; }
+
+    public String getReleaseDate() { return this.release_date; }
+
+    public void setTitle(String title) { this.title = title; }
+
+    public String getTitle() { return this.title; }
+
+    public void setVoteAvg(double avg) { this.vote_average = avg; }
+
+    public double getVoteAvg() { return this.vote_average; }
 
     public String toString() {
-        return posterURL;
+        return poster_path;
     }
 
     static final Parcelable.Creator<myMovie> CREATOR = new Parcelable.Creator<myMovie>() {
