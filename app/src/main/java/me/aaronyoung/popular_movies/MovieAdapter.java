@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 /**
  * Created by shangweiyoung on 10/4/16.
  */
@@ -18,9 +20,9 @@ public class MovieAdapter extends ArrayAdapter<myMovie> {
     private Context context;
     private int layoutResourceId;
     private int imageViewId;
-    private myMovie[] movies = null;
+    private ArrayList<myMovie> movies = null;
 
-    public MovieAdapter(Context context, int layoutResourceId, int imageViewId, myMovie[] movies) {
+    public MovieAdapter(Context context, int layoutResourceId, int imageViewId, ArrayList<myMovie> movies) {
         super(context, layoutResourceId, imageViewId, movies);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
@@ -47,7 +49,7 @@ public class MovieAdapter extends ArrayAdapter<myMovie> {
         }
 
         // Get movie from movies array via position
-        myMovie movie = movies[position];
+        myMovie movie = movies.get(position);
         // Update ImageView with movie poster image using Picasso
         Picasso.with(context)
                 .load(movie.getPosterURL())
