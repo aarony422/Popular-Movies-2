@@ -73,6 +73,12 @@ public class MovieFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateMovies();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("movieList", movieList);
         super.onSaveInstanceState(outState);
