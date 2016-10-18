@@ -37,7 +37,6 @@ public class MovieFragment extends Fragment {
     private ArrayAdapter<myMovie> movieAdapter;
     private ArrayList<myMovie> movieList = new ArrayList<myMovie>();
 
-
     private OnFragmentInteractionListener mListener;
 
     public MovieFragment() {
@@ -75,7 +74,7 @@ public class MovieFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        updateMovies();
+        //updateMovies();
     }
 
     @Override
@@ -286,7 +285,8 @@ public class MovieFragment extends Fragment {
                 for(myMovie movie : result) {
                     movieList.add(movie); // update with new data
                 }
-                // New data is back from the server.  Hooray!
+                // without notifying, adapter doesn't update after initial Fetch of data
+                movieAdapter.notifyDataSetChanged();
             }
         }
     }

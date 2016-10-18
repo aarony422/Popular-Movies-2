@@ -24,6 +24,15 @@ public class myMovie implements Parcelable{
         vote_average = 0.0;
     }
 
+    // Constructor for testing purposes
+    public myMovie(String poster_path) {
+        this.poster_path = poster_path;
+        overview = "";
+        release_date = "";
+        title = "";
+        vote_average = 0.0;
+    }
+
     private myMovie(Parcel in) {
         IMAGE_BASE_URL = in.readString();
         poster_path = in.readString();
