@@ -38,6 +38,7 @@ import java.util.ArrayList;
 public class MovieFragment extends Fragment {
     private ArrayAdapter<myMovie> movieAdapter;
     private ArrayList<myMovie> movieList = new ArrayList<myMovie>();
+    private final String MOVIE_DATA = "movie_data";
 
     private OnFragmentInteractionListener mListener;
 
@@ -120,7 +121,7 @@ public class MovieFragment extends Fragment {
 
                 // Create intent to start movie Detail Activity
                 Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
-                        .putExtra("MOVIE_DATA", movie);
+                        .putExtra(MOVIE_DATA, movie);
 
                 // Start the Activity with intent
                 startActivity(intent);
