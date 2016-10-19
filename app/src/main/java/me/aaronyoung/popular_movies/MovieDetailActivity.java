@@ -15,4 +15,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public void setActionBarTitle(String title){
+        this.setTitle(title);
+    }
+
 }

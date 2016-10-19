@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -26,9 +25,14 @@ public class MovieDetailActivityFragment extends Fragment {
         // Retrieve MOVIE_DATA
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(MOVIE_DATA)) {
+            // Retrieve data
             movieData = intent.getParcelableExtra(MOVIE_DATA);
-            ((TextView) rootView.findViewById(R.id.movie_detail_textview))
-                    .setText(movieData.getTitle());
+
+            // Set Activity title
+            ((MovieDetailActivity) getActivity()).setActionBarTitle(movieData.getTitle());
+
+            //((TextView) rootView.findViewById(R.id.movie_detail_textview))
+            //        .setText(movieData.getTitle());
         }
         return rootView;
     }
