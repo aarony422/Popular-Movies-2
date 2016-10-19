@@ -1,6 +1,7 @@
 package me.aaronyoung.popular_movies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
@@ -108,6 +110,22 @@ public class MovieFragment extends Fragment {
 
         // attach MovieAdapter to gridview
         gridView.setAdapter(movieAdapter);
+
+        // Set item click listener
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // Get myMovie object corresponding to clicked position
+                myMovie movie = movieAdapter.getItem(position);
+
+                // Create intent to start movie Detail Activity
+                Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
+                        .putExtra("MOVIE_DATA", movie);
+
+                // Start the Activity with intent
+                startActivity(intent);
+            }
+        });
 
         // return the inflated rootView
         return rootView;
