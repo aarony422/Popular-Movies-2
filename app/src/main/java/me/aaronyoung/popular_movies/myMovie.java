@@ -71,13 +71,19 @@ public class myMovie implements Parcelable{
 
     public String getReleaseDate() { return this.release_date; }
 
+    public String getReleaseYear() {
+        return this.release_date.split("-")[0];
+    }
+
     public void setTitle(String title) { this.title = title; }
 
     public String getTitle() { return this.title; }
 
     public void setVoteAvg(double avg) { this.vote_average = avg; }
 
-    public double getVoteAvg() { return this.vote_average; }
+    public String getVoteAvg() {
+        return Double.toString(this.vote_average) + "/10";
+    }
 
     public String toString() {
         return poster_path;

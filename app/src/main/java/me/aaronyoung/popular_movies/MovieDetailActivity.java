@@ -15,6 +15,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    // method to change activity title
     public void setActionBarTitle(String title){
         this.setTitle(title);
     }

@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -31,8 +35,29 @@ public class MovieDetailActivityFragment extends Fragment {
             // Set Activity title
             ((MovieDetailActivity) getActivity()).setActionBarTitle(movieData.getTitle());
 
-            //((TextView) rootView.findViewById(R.id.movie_detail_textview))
-            //        .setText(movieData.getTitle());
+            // Set Movie Title
+            ((TextView) rootView.findViewById(R.id.movie_title))
+                    .setText(movieData.getTitle());
+
+            // Set Movie poster Image
+            Picasso.with(getContext())
+                    .load(movieData.getPoster_path())
+                    //.resize(6000, 2000)
+                    //.centerInside()
+                    .placeholder(R.drawable.movie)
+                    .into((ImageView) rootView.findViewById(R.id.movie_poster));
+
+            // Set Release Date
+            ((TextView) rootView.findViewById(R.id.release_date))
+                    .setText(movieData.getReleaseYear());
+
+            // Set Vote Average
+            ((TextView) rootView.findViewById(R.id.vote_avg))
+                    .setText(movieData.getVoteAvg());
+
+            // Set Movie Overview
+            ((TextView) rootView.findViewById(R.id.overview))
+                    .setText(movieData.getOverview());
         }
         return rootView;
     }
