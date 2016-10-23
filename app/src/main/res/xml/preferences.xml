@@ -5,5 +5,6 @@
         android:key="@string/pref_sortOrder"
         android:defaultValue="@string/pref_sortOrder_toprated"
         android:entryValues="@array/pref_sortOrder_values"
-        android:entries="@array/pref_sortOrder_options" />
+        android:entries="@array/pref_sortOrder_options"
+        android:summary="%s"/>
 </PreferenceScreen>

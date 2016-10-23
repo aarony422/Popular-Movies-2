@@ -47,5 +47,4 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.OnF
 
         return super.onOptionsItemSelected(item);
     }
-
 }

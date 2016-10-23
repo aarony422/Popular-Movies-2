@@ -37,7 +37,7 @@ import java.util.ArrayList;
  * Use the {@link MovieFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieFragment extends Fragment {
+public class MovieFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private ArrayAdapter<myMovie> movieAdapter;
     private ArrayList<myMovie> movieList = new ArrayList<myMovie>();
     private final String MOVIE_DATA = "movie_data";
@@ -86,6 +86,14 @@ public class MovieFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("movieList", movieList);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        // if sort order preference is changed
+        if (key.equals(getString(R.string.pref_sortOrder))) {
+            updateMovies(); // update Movie
+        }
     }
 
     public void updateMovies() {
