@@ -2,9 +2,11 @@ package me.aaronyoung.popular_movies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,8 +90,14 @@ public class MovieFragment extends Fragment {
 
     public void updateMovies() {
         FetchMovieTask fetchMovieTask = new FetchMovieTask();
-        // TODO: Pass in popular or top_rated as user preference
-        fetchMovieTask.execute();
+
+        // Pass in popular or top_rated as user preference
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        // get sortOrder, using toprated as default
+        String sortOrder = prefs.getString(getString(R.string.pref_sortOrder),
+                getString(R.string.pref_sortOrder_toprated));
+        // Call fetchMovieTask with sortOrder as a parameter
+        fetchMovieTask.execute(sortOrder);
     }
 
     @Override
@@ -169,11 +177,9 @@ public class MovieFragment extends Fragment {
 
         @Override
         protected ArrayList<myMovie> doInBackground(String... params) {
-            String sortOrder = "top_rated";
+            String sortOrder = params[0];
 
-            if (params.length != 0) {
-                sortOrder = params[0];
-            }
+            Log.v(LOG_TAG, "SortOrder = " + sortOrder);
 
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.

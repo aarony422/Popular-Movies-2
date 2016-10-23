@@ -21,7 +21,7 @@
 
     <!-- sort order preference values -->
     <string name="pref_sortOrder">sortOrder</string>
-    <string name="pref_sortOrder_toprated">topRated</string>
+    <string name="pref_sortOrder_toprated">top_rated</string>
     <string name="pref_sortOrder_popular">popular</string>
 
 
