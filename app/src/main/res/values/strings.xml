@@ -16,8 +16,8 @@
     <string name="pref_sortOrder_label">Sort Order</string>
 
     <!-- sort order labels -->
-    <string name="pref_sortOrder_label_topRated">Top Rated</string>
-    <string name="pref_sortOrder_label_popular">Popular</string>
+    <string name="pref_sortOrder_label_topRated">Highest Rated</string>
+    <string name="pref_sortOrder_label_popular">Most Popular</string>
 
     <!-- sort order preference values -->
     <string name="pref_sortOrder">sortOrder</string>
