@@ -4,10 +4,25 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_movie_fragment">Hello Movie Fragment</string>
     <string name="title_activity_movie_detail">Movie Details</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="action_settings">Settings</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="movie_title">Movie Title</string>
     <string name="release_date">Release Date</string>
     <string name="vote_avg">Vote Average</string>
     <string name="movie_overview">Movie Overview</string>
+
+    <!-- preferences -->
+    <string name="pref_sortOrder_label">Sort Order</string>
+
+    <!-- sort order labels -->
+    <string name="pref_sortOrder_label_topRated">Top Rated</string>
+    <string name="pref_sortOrder_label_popular">Popular</string>
+
+    <!-- sort order preference values -->
+    <string name="pref_sortOrder">sortOrder</string>
+    <string name="pref_sortOrder_toprated">topRated</string>
+    <string name="pref_sortOrder_popular">popular</string>
+
+
 </resources>
