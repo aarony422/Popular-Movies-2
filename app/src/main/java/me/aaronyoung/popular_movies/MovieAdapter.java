@@ -54,6 +54,7 @@ public class MovieAdapter extends ArrayAdapter<myMovie> {
         Picasso.with(context)
                 .load(movie.getPoster_path())
                 .placeholder(R.drawable.movie)
+                .error(R.drawable.movie)
                 .into(holder.posterImage);
 
         return gridViewEntry;
