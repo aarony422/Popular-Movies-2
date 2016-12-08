@@ -15,7 +15,7 @@ public class MovieContract {
 
     // Content Authority for the content provider
     // The package name for the app is guaranteed to be unique on the device
-    public static final String CONTENT_AUTHORITY = "me.aaronyoung.popular_movies.app";
+    public static final String CONTENT_AUTHORITY = "me.aaronyoung.popular_movies";
 
     // Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
     // the content provider
