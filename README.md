@@ -1,7 +1,7 @@
 # Popular Movies
 
 ## The Movie DB API Key
-This application uses data from The Movie DB API. Every API call requires a unique API key, which is taken out for legal reasons. To have the application run properly, you will need to create an account at https://www.themoviedb.org/account/signup and request a free API key for non-commercial use. 
+This application uses me.aaronyoung.popular_movies.data from The Movie DB API. Every API call requires a unique API key, which is taken out for legal reasons. To have the application run properly, you will need to create an account at https://www.themoviedb.org/account/signup and request a free API key for non-commercial use.
 
 There are multiple ways to set your API key within the application. Here are 2 ways:
 

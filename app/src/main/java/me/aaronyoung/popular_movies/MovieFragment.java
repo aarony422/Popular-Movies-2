@@ -66,7 +66,7 @@ public class MovieFragment extends Fragment implements SharedPreferences.OnShare
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null || !savedInstanceState.containsKey("movieList")) {
-            // if no saved movie data, call updateMovies()
+            // if no saved movie me.aaronyoung.popular_movies.data, call updateMovies()
             updateMovies();
         } else {
             movieList = savedInstanceState.getParcelableArrayList("movieList");
@@ -238,7 +238,7 @@ public class MovieFragment extends Fragment implements SharedPreferences.OnShare
                 movieJsonStr = buffer.toString();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
+                // If the code didn't successfully get the weather me.aaronyoung.popular_movies.data, there's no point in attemping
                 // to parse it.
                 return null;
             } finally {
@@ -289,7 +289,7 @@ public class MovieFragment extends Fragment implements SharedPreferences.OnShare
                 // Create new myMovie Object
                 myMovie movie = new myMovie();
 
-                // Set myMovie data
+                // Set myMovie me.aaronyoung.popular_movies.data
                 movie.setPosterPath(movieEntry.getString(POSTER_PATH));
                 movie.setOverview(movieEntry.getString(OVERVIEW));
                 movie.setReleaseDate(movieEntry.getString(RELEASE_DATE));
@@ -307,11 +307,11 @@ public class MovieFragment extends Fragment implements SharedPreferences.OnShare
         @Override
         protected void onPostExecute(ArrayList<myMovie> result) {
             if (result != null) {
-                movieList.clear(); // clear movie data
+                movieList.clear(); // clear movie me.aaronyoung.popular_movies.data
                 for(myMovie movie : result) {
-                    movieList.add(movie); // update with new data
+                    movieList.add(movie); // update with new me.aaronyoung.popular_movies.data
                 }
-                // without notifying, adapter doesn't update after initial Fetch of data
+                // without notifying, adapter doesn't update after initial Fetch of me.aaronyoung.popular_movies.data
                 movieAdapter.notifyDataSetChanged();
             }
         }

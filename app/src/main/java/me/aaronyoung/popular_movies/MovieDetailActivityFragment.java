@@ -29,7 +29,7 @@ public class MovieDetailActivityFragment extends Fragment {
         // Retrieve MOVIE_DATA
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(MOVIE_DATA)) {
-            // Retrieve data
+            // Retrieve me.aaronyoung.popular_movies.data
             movieData = intent.getParcelableExtra(MOVIE_DATA);
 
             // Set Activity title
