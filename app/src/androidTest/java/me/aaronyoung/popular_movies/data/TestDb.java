@@ -1,5 +1,6 @@
 package me.aaronyoung.popular_movies.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.HashSet;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -84,6 +86,45 @@ public class TestDb {
 
         // if this fails, it means that your database doesn't contain all required columns
         assertTrue("Error: The database doesn't contain all required movie entry columns", movieColumnSet.isEmpty());
+        db.close();
+    }
+
+    @Test
+    public void testMovieTable() {
+        // get reference to writable database
+        MovieDbHelper dbHelper = new MovieDbHelper(appContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Create ContentValues you want to insert
+        ContentValues testValues = TestUtilities.createMovieTestValues();
+
+        long movieRowId = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, testValues);
+
+        // verify we got a row back
+        assertTrue(movieRowId != -1);
+
+        // test that the correct values were inserted
+        Cursor cursor = db.query(
+                MovieContract.MovieEntry.TABLE_NAME, // table name
+                null, // all columns
+                null, // columns for where clause
+                null, // values for where clause
+                null, // columns to group by
+                null, // columns to filter by row group
+                null // sort order
+        );
+
+        assertTrue("Error: No records returned from movie query!", cursor.moveToFirst());
+
+        // check returned values are correct
+        TestUtilities.validateCurrentRecord("Error: movie query validation failed",
+                cursor, testValues);
+
+        // Move the cursor to demonstrate that there is only one record in db
+        assertFalse("Error: More than one record returned from movie query", cursor.moveToNext());
+
+        // free resources
+        cursor.close();
         db.close();
     }
 }
