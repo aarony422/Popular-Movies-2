@@ -3,6 +3,7 @@ package me.aaronyoung.popular_movies.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by shangweiyoung on 12/8/16.
@@ -15,6 +16,8 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "movies.db";
 
+    public static final String LOG_TAG = MovieDbHelper.class.getSimpleName();
+
     public MovieDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -22,6 +25,38 @@ public class MovieDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         // Create tables Popular Movies needs
+        final String SQL_CREATE_MOVIES_TABLE = "CREATE TABLE " + MovieContract.MovieEntry.TABLE_NAME + " (" +
+                MovieContract.MovieEntry._ID + " INTEGER PRIMARY KEY, " +
+                MovieContract.MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_VOTE_AVG + " REAL NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_FAVORITE + " INTEGER NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_POPULAR + " INTEGER NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_TOP_RATED + " INTEGER NOT NULL " +
+                ");";
+
+        Log.v(LOG_TAG, "SQL MOVIE CREATE string = " + SQL_CREATE_MOVIES_TABLE);
+
+        final String SQL_CREATE_TRAILERS_TABLE = "CREATE TABLE " + MovieContract.TrailerEntry.TABLE_NAME + " (" +
+                MovieContract.TrailerEntry._ID + " INTEGER PRIMARY KEY, " +
+                MovieContract.TrailerEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_KEY + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_SITE + " TEXT NOT NULL " +
+                ");";
+
+        final String SQL_CREATE_REVIEWS_TABLE = "CREATE TABLE " + MovieContract.ReviewEntry.TABLE_NAME + " (" +
+                MovieContract.ReviewEntry._ID + " INTEGER PRIMARY KEY, " +
+                MovieContract.ReviewEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_CONTENT + " TEXT NOT NULL " +
+                ");";
+        sqLiteDatabase.execSQL(SQL_CREATE_MOVIES_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_TRAILERS_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_REVIEWS_TABLE);
     }
 
     @Override
