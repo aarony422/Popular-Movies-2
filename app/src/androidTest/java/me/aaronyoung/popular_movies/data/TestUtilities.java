@@ -38,6 +38,20 @@ public class TestUtilities {
         return testValues;
     }
 
+    public static ContentValues createReviewsTestValues() {
+        ContentValues testValues = new ContentValues();
+        testValues.put(MovieContract.ReviewEntry.COLUMN_MOVIE_ID, "1234");
+        testValues.put(MovieContract.ReviewEntry.COLUMN_AUTHOR, "Ruben Ulloa");
+        testValues.put(MovieContract.ReviewEntry.COLUMN_CONTENT, "Finding Dory was just meh.");
+        return testValues;
+    }
+
+    public static ContentValues createFavoritesTestValues() {
+        ContentValues testValues = new ContentValues();
+        testValues.put(MovieContract.FavoriteEntry.COLUMN_MOVIE_ID, "1234");
+        return testValues;
+    }
+
     public static void validateCurrentRecord(String error, Cursor cursor, ContentValues expectedValues) {
         Set<Map.Entry<String,Object>> valueSet = expectedValues.valueSet();
         for (Map.Entry<String, Object> entry : valueSet) {
