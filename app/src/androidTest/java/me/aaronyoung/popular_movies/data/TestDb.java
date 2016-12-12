@@ -126,4 +126,43 @@ public class TestDb {
         cursor.close();
         db.close();
     }
+
+    @Test
+    public void testTrailersTable() {
+        // get reference to writable database
+        MovieDbHelper dbHelper = new MovieDbHelper(appContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Create ContentValues you want to insert
+        ContentValues testValues = TestUtilities.createTrailerTestValues();
+
+        long movieRowId = db.insert(MovieContract.TrailerEntry.TABLE_NAME, null, testValues);
+
+        // verify we got a row back
+        assertTrue(movieRowId != -1);
+
+        // test that the correct values were inserted
+        Cursor cursor = db.query(
+                MovieContract.TrailerEntry.TABLE_NAME, // table name
+                null, // all columns
+                null, // columns for where clause
+                null, // values for where clause
+                null, // columns to group by
+                null, // columns to filter by row group
+                null // sort order
+        );
+
+        assertTrue("Error: No records returned from trailer query!", cursor.moveToFirst());
+
+        // check returned values are correct
+        TestUtilities.validateCurrentRecord("Error: trailer query validation failed",
+                cursor, testValues);
+
+        // Move the cursor to demonstrate that there is only one record in db
+        assertFalse("Error: More than one record returned from trailer query", cursor.moveToNext());
+
+        // free resources
+        cursor.close();
+        db.close();
+    }
 }

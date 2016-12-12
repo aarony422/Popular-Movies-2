@@ -29,6 +29,15 @@ public class TestUtilities {
         return testValues;
     }
 
+    public static ContentValues createTrailerTestValues() {
+        ContentValues testValues = new ContentValues();
+        testValues.put(MovieContract.TrailerEntry.COLUMN_MOVIE_ID, "1234");
+        testValues.put(MovieContract.TrailerEntry.COLUMN_KEY, "6cuxj");
+        testValues.put(MovieContract.TrailerEntry.COLUMN_NAME, "Paccos tacos");
+        testValues.put(MovieContract.TrailerEntry.COLUMN_SITE, "Youtube");
+        return testValues;
+    }
+
     public static void validateCurrentRecord(String error, Cursor cursor, ContentValues expectedValues) {
         Set<Map.Entry<String,Object>> valueSet = expectedValues.valueSet();
         for (Map.Entry<String, Object> entry : valueSet) {
