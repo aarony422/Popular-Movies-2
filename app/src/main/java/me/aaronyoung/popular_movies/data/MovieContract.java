@@ -1,6 +1,7 @@
 package me.aaronyoung.popular_movies.data;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -64,6 +65,16 @@ public class MovieContract {
 
         // top rated
         public static final String COLUMN_TOP_RATED = "top_rated";
+
+        // Uri for movies/[popular | top_rated | favorite ]
+        public static Uri buildMovieWithPreferenceUri(String preference) {
+            return CONTENT_URI.buildUpon().appendPath(preference).build();
+        }
+
+        // Uri for movies/[movie_id]
+        public static Uri buildMovieWithId(int movie_id) {
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
+        }
 
     }
 
