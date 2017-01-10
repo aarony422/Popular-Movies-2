@@ -3,6 +3,7 @@ package me.aaronyoung.popular_movies.data;
 import android.content.ContentProvider;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 import static android.Manifest.permission_group.LOCATION;
@@ -16,6 +17,7 @@ public class MovieProvider extends ContentProvider {
     // The URI Matcher used by this content provider.
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private MovieDbHelper mOpenHelper;
+    private static final SQLiteQueryBuilder sMovieByPreferenceQueryBuilder;
 
     static final int MOVIE = 100;
     static final int MOVIE_WITH_ID = 101;
@@ -30,6 +32,20 @@ public class MovieProvider extends ContentProvider {
     public boolean onCreate() {
         mOpenHelper = new MovieDbHelper(getContext());
         return true;
+    }
+
+    static{
+        sMovieByPreferenceQueryBuilder = new SQLiteQueryBuilder();
+
+        //This is an inner join which looks like
+        //weather INNER JOIN location ON weather.location_id = location._id
+        sMovieByPreferenceQueryBuilder.setTables(
+                WeatherContract.WeatherEntry.TABLE_NAME + " INNER JOIN " +
+                        WeatherContract.LocationEntry.TABLE_NAME +
+                        " ON " + WeatherContract.WeatherEntry.TABLE_NAME +
+                        "." + WeatherContract.WeatherEntry.COLUMN_LOC_KEY +
+                        " = " + WeatherContract.LocationEntry.TABLE_NAME +
+                        "." + WeatherContract.LocationEntry._ID);
     }
 
     static UriMatcher buildUriMatcher() {
@@ -49,6 +65,24 @@ public class MovieProvider extends ContentProvider {
         return matcher;
     }
 
+    //movie.preference = ?
+    private static final String sPreferencePopularSelection =
+            MovieContract.MovieEntry.TABLE_NAME +
+                    "." + MovieContract.MovieEntry.COLUMN_PREFERENCE + " = ? ";
+
+    private Cursor getMovieByPreferencePopular(
+            Uri uri, String[] projection, String sortOrder) {
+
+        return sMovieByPreferenceQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sPreferencePopularSelection,
+                new String[]{MovieContract.MovieEntry.COLUMN_PREFERENCE, String.valueOf(MovieContract.MovieEntry.COLUMN_PREFERENCE_POPULAR)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
@@ -56,7 +90,11 @@ public class MovieProvider extends ContentProvider {
         // and query the database accordingly.
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
-
+            // "movie/popular
+            case MOVIE_WITH_PREFERENCE_POPULAR: {
+                retCursor = getMovieByPreferencePopular(uri, projection, sortOrder);
+                break;
+            }
             // "movie"
             case MOVIE: {
                 retCursor = mOpenHelper.getReadableDatabase().query(

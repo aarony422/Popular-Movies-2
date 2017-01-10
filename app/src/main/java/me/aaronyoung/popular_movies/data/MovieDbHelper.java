@@ -33,8 +33,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
                 MovieContract.MovieEntry.COLUMN_VOTE_AVG + " REAL NOT NULL, " +
                 MovieContract.MovieEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
                 MovieContract.MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_POPULAR + " INTEGER NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_TOP_RATED + " INTEGER NOT NULL " +
+                MovieContract.MovieEntry.COLUMN_PREFERENCE + " INTEGER NOT NULL, " +
                 ");";
 
         Log.v(LOG_TAG, "SQL MOVIE CREATE string = " + SQL_CREATE_MOVIES_TABLE);

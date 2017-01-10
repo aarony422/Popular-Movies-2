@@ -60,11 +60,12 @@ public class MovieContract {
         // poster_path
         public static final String COLUMN_POSTER_PATH = "poster_path";
 
-        // popular
-        public static final String COLUMN_POPULAR = "popular";
+        // preference
+        public static final String COLUMN_PREFERENCE = "preference";
 
-        // top rated
-        public static final String COLUMN_TOP_RATED = "top_rated";
+        // integer constants for popular = 1 and top_rated = 2
+        public static final int COLUMN_PREFERENCE_POPULAR = 1;
+        public static final int COLUMN_PREFERENCE_TOP_RATED = 2;
 
         // Uri for movies/[popular | top_rated | favorite ]
         public static Uri buildMovieWithPreferenceUri(String preference) {

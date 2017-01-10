@@ -21,9 +21,8 @@ public class TestUtilities {
         testValues.put(MovieContract.MovieEntry.COLUMN_TITLE, "I love Ruben");
         testValues.put(MovieContract.MovieEntry.COLUMN_OVERVIEW, "Ruben buys me dinner");
         testValues.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE, "NOW");
-        testValues.put(MovieContract.MovieEntry.COLUMN_POPULAR, "1");
+        testValues.put(MovieContract.MovieEntry.COLUMN_PREFERENCE, "1");
         testValues.put(MovieContract.MovieEntry.COLUMN_POSTER_PATH, "here/and/now");
-        testValues.put(MovieContract.MovieEntry.COLUMN_TOP_RATED, "0");
         testValues.put(MovieContract.MovieEntry.COLUMN_VOTE_AVG, "99.9");
 
         return testValues;

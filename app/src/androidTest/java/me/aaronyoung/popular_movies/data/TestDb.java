@@ -74,8 +74,7 @@ public class TestDb {
         movieColumnSet.add(MovieContract.MovieEntry.COLUMN_VOTE_AVG);
         movieColumnSet.add(MovieContract.MovieEntry.COLUMN_OVERVIEW);
         movieColumnSet.add(MovieContract.MovieEntry.COLUMN_POSTER_PATH);
-        movieColumnSet.add(MovieContract.MovieEntry.COLUMN_POPULAR);
-        movieColumnSet.add(MovieContract.MovieEntry.COLUMN_TOP_RATED);
+        movieColumnSet.add(MovieContract.MovieEntry.COLUMN_PREFERENCE);
 
         int columnNameIndex = c.getColumnIndex("name");
         do {
