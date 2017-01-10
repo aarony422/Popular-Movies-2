@@ -22,6 +22,7 @@ public class TestUtilities {
         testValues.put(MovieContract.MovieEntry.COLUMN_OVERVIEW, "Ruben buys me dinner");
         testValues.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE, "NOW");
         testValues.put(MovieContract.MovieEntry.COLUMN_PREFERENCE, "1");
+        testValues.put(MovieContract.MovieEntry.COLUMN_FAVORITE, "1");
         testValues.put(MovieContract.MovieEntry.COLUMN_POSTER_PATH, "here/and/now");
         testValues.put(MovieContract.MovieEntry.COLUMN_VOTE_AVG, "99.9");
 
@@ -45,11 +46,13 @@ public class TestUtilities {
         return testValues;
     }
 
+    /*
     public static ContentValues createFavoritesTestValues() {
         ContentValues testValues = new ContentValues();
         testValues.put(MovieContract.FavoriteEntry.COLUMN_MOVIE_ID, "1234");
         return testValues;
     }
+    */
 
     public static void validateCurrentRecord(String error, Cursor cursor, ContentValues expectedValues) {
         Set<Map.Entry<String,Object>> valueSet = expectedValues.valueSet();

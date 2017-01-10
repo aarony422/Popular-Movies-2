@@ -63,9 +63,14 @@ public class MovieContract {
         // preference
         public static final String COLUMN_PREFERENCE = "preference";
 
-        // integer constants for popular = 1 and top_rated = 2
-        public static final int COLUMN_PREFERENCE_POPULAR = 1;
-        public static final int COLUMN_PREFERENCE_TOP_RATED = 2;
+        // favorite
+        public static final String COLUMN_FAVORITE = "favorite";
+
+        // integer constants for popular = 1, top_rated = 2, favored = 1, and not favored = 0
+        public static final int PREFERENCE_POPULAR = 1;
+        public static final int PREFERENCE_TOP_RATED = 2;
+        public static final int FAVORITE_FAVORED = 1;
+        public static final int FAVORITE_UNFAVORED = 0;
 
         // Uri for movies/[popular | top_rated | favorite ]
         public static Uri buildMovieWithPreferenceUri(String preference) {
@@ -140,7 +145,7 @@ public class MovieContract {
         }
     }
 
-    /* inner class that defines the table contents of Favorites table */
+    /* inner class that defines the table contents of Favorites table
     public static final class FavoriteEntry implements BaseColumns {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_FAVORITES).build();
@@ -162,4 +167,5 @@ public class MovieContract {
             return ContentUris.withAppendedId(CONTENT_URI, movie_id);
         }
     }
+    */
 }

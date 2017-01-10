@@ -76,7 +76,7 @@ public class MovieProvider extends ContentProvider {
         return sMovieByPreferenceQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 sPreferencePopularSelection,
-                new String[]{MovieContract.MovieEntry.COLUMN_PREFERENCE, String.valueOf(MovieContract.MovieEntry.COLUMN_PREFERENCE_POPULAR)},
+                new String[]{MovieContract.MovieEntry.COLUMN_PREFERENCE, String.valueOf(MovieContract.MovieEntry.PREFERENCE_POPULAR)},
                 null,
                 null,
                 sortOrder
@@ -135,6 +135,7 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
             // "trailers"
+            /*
             case FAVORITES: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         MovieContract.FavoriteEntry.TABLE_NAME,
@@ -147,6 +148,7 @@ public class MovieProvider extends ContentProvider {
                 );
                 break;
             }
+            */
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

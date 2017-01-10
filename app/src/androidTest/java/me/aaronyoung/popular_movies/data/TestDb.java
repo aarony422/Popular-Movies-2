@@ -75,6 +75,7 @@ public class TestDb {
         movieColumnSet.add(MovieContract.MovieEntry.COLUMN_OVERVIEW);
         movieColumnSet.add(MovieContract.MovieEntry.COLUMN_POSTER_PATH);
         movieColumnSet.add(MovieContract.MovieEntry.COLUMN_PREFERENCE);
+        movieColumnSet.add(MovieContract.MovieEntry.COLUMN_FAVORITE);
 
         int columnNameIndex = c.getColumnIndex("name");
         do {
@@ -204,6 +205,7 @@ public class TestDb {
         db.close();
     }
 
+    /*
     @Test
     public void testFavoritesTable() {
         // get reference to writable database
@@ -242,4 +244,5 @@ public class TestDb {
         cursor.close();
         db.close();
     }
+    */
 }
