@@ -103,6 +103,11 @@ public class MovieContract {
 
         // site
         public static final String COLUMN_SITE = "site";
+
+        // Uri for trailer/[movie_id]
+        public static Uri buildTrailerWithId(int movie_id) {
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
+        }
     }
 
     /* inner class that defines the table contents of Review table */
@@ -127,6 +132,11 @@ public class MovieContract {
 
         // content
         public static final String COLUMN_CONTENT = "content";
+
+        // Uri for review/[movie_id]
+        public static Uri buildReviewWithId(int movie_id) {
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
+        }
     }
 
     /* inner class that defines the table contents of Favorites table */
@@ -145,5 +155,10 @@ public class MovieContract {
 
         // movie_id
         public static final String COLUMN_MOVIE_ID = "movie_id";
+
+        // Uri for favorite/[movie_id]
+        public static Uri buildFavoriteWithId(int movie_id) {
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
+        }
     }
 }
