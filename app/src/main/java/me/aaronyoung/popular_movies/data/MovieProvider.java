@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.graphics.Movie;
 import android.net.Uri;
 
 import static android.Manifest.permission_group.LOCATION;
@@ -17,16 +18,17 @@ public class MovieProvider extends ContentProvider {
     // The URI Matcher used by this content provider.
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private MovieDbHelper mOpenHelper;
-    private static final SQLiteQueryBuilder sMovieByPreferenceQueryBuilder;
+    //private static final SQLiteQueryBuilder sMovieByPreferenceQueryBuilder;
 
     static final int MOVIE = 100;
     static final int MOVIE_WITH_ID = 101;
     static final int MOVIE_WITH_PREFERENCE_POPULAR = 102;
     static final int MOVIE_WITH_PREFERENCE_TOP_RATED = 103;
-    static final int MOVIE_WITH_PREFERENCE_FAVORITE = 104;
+    static final int MOVIE_FAVORITE = 104;
     static final int TRAILERS = 200;
+    static final int TRAILERS_WITH_ID = 201;
     static final int REVIEWS = 300;
-    static final int FAVORITES = 400;
+    static final int REVIEWS_WITH_ID = 301;
 
     @Override
     public boolean onCreate() {
@@ -34,6 +36,7 @@ public class MovieProvider extends ContentProvider {
         return true;
     }
 
+    /*
     static{
         sMovieByPreferenceQueryBuilder = new SQLiteQueryBuilder();
 
@@ -47,6 +50,7 @@ public class MovieProvider extends ContentProvider {
                         " = " + WeatherContract.LocationEntry.TABLE_NAME +
                         "." + WeatherContract.LocationEntry._ID);
     }
+    */
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -57,26 +61,52 @@ public class MovieProvider extends ContentProvider {
         matcher.addURI(authority, MovieContract.PATH_MOVIES + "/#", MOVIE_WITH_ID);
         matcher.addURI(authority, MovieContract.PATH_MOVIES + "/popular", MOVIE_WITH_PREFERENCE_POPULAR);
         matcher.addURI(authority, MovieContract.PATH_MOVIES + "/top_rated", MOVIE_WITH_PREFERENCE_TOP_RATED);
-        matcher.addURI(authority, MovieContract.PATH_MOVIES + "/favorite", MOVIE_WITH_PREFERENCE_FAVORITE);
+        matcher.addURI(authority, MovieContract.PATH_MOVIES + "/favorite", MOVIE_FAVORITE);
         matcher.addURI(authority, MovieContract.PATH_TRAILERS, TRAILERS);
+        matcher.addURI(authority, MovieContract.PATH_TRAILERS + "/#", TRAILERS_WITH_ID);
         matcher.addURI(authority, MovieContract.PATH_REVIEWS, REVIEWS);
-        matcher.addURI(authority, MovieContract.PATH_FAVORITES, FAVORITES);
+        matcher.addURI(authority, MovieContract.PATH_REVIEWS, REVIEWS_WITH_ID);
 
         return matcher;
     }
 
     //movie.preference = ?
-    private static final String sPreferencePopularSelection =
+    private static final String sPreferenceSelection =
             MovieContract.MovieEntry.TABLE_NAME +
                     "." + MovieContract.MovieEntry.COLUMN_PREFERENCE + " = ? ";
 
-    private Cursor getMovieByPreferencePopular(
+    //movie.favorite = ?
+    private static final String sFavoriteSelection =
+            MovieContract.MovieEntry.TABLE_NAME +
+                    "." + MovieContract.MovieEntry.COLUMN_FAVORITE + " = ? ";
+
+    //movie.movie_id = ?
+    private static final String sMovieIDSelection =
+            MovieContract.MovieEntry.TABLE_NAME +
+                    "." + MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ? ";
+
+    private Cursor getMovieByPreference(
+            Uri uri, String[] projection, String sortOrder, int preference) {
+
+        return mOpenHelper.getReadableDatabase().query(
+                MovieContract.MovieEntry.TABLE_NAME,
+                projection,
+                sPreferenceSelection,
+                new String[]{MovieContract.MovieEntry.COLUMN_PREFERENCE, String.valueOf(preference)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    private Cursor getMovieFavorite(
             Uri uri, String[] projection, String sortOrder) {
 
-        return sMovieByPreferenceQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return mOpenHelper.getReadableDatabase().query(
+                MovieContract.MovieEntry.TABLE_NAME,
                 projection,
-                sPreferencePopularSelection,
-                new String[]{MovieContract.MovieEntry.COLUMN_PREFERENCE, String.valueOf(MovieContract.MovieEntry.PREFERENCE_POPULAR)},
+                sFavoriteSelection,
+                new String[]{MovieContract.MovieEntry.COLUMN_FAVORITE, String.valueOf(MovieContract.MovieEntry.FAVORITE_FAVORED)},
                 null,
                 null,
                 sortOrder
@@ -92,7 +122,30 @@ public class MovieProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             // "movie/popular
             case MOVIE_WITH_PREFERENCE_POPULAR: {
-                retCursor = getMovieByPreferencePopular(uri, projection, sortOrder);
+                retCursor = getMovieByPreference(uri, projection, sortOrder, MovieContract.MovieEntry.PREFERENCE_POPULAR);
+                break;
+            }
+            // "movie/top_rated
+            case MOVIE_WITH_PREFERENCE_TOP_RATED: {
+                retCursor = getMovieByPreference(uri, projection, sortOrder, MovieContract.MovieEntry.PREFERENCE_TOP_RATED);
+                break;
+            }
+            // "movie/favorite"
+            case MOVIE_FAVORITE: {
+                retCursor = getMovieFavorite(uri, projection, sortOrder);
+                break;
+            }
+            // "movie/[id]
+            case MOVIE_WITH_ID: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MovieContract.MovieEntry.TABLE_NAME,
+                        projection,
+                        sMovieIDSelection,
+                        new String[]{MovieContract.MovieEntry.COLUMN_MOVIE_ID, MovieContract.getMovieIDFromUri(uri)},
+                        null,
+                        null,
+                        sortOrder
+                );
                 break;
             }
             // "movie"
