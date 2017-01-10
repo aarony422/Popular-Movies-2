@@ -1,6 +1,7 @@
 package me.aaronyoung.popular_movies.data;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -26,9 +27,6 @@ public class MovieContract {
     public static final String PATH_TRAILERS = "trailers";
     public static final String PATH_REVIEWS = "reviews";
     public static final String PATH_FAVORITES = "favorites";
-
-    // Query parameter
-    public static final String MOVIE_ID = "movieid";
 
     /* inner class that defines the table contents of movie table */
     public static final class MovieEntry implements BaseColumns {
@@ -73,9 +71,9 @@ public class MovieContract {
             return CONTENT_URI.buildUpon().appendPath(preference).build();
         }
 
-        // Uri for movies?movie_id=[id]
+        // Uri for movies/[movie_id]
         public static Uri buildMovieWithId(int movie_id) {
-            return CONTENT_URI.buildUpon().appendQueryParameter(MOVIE_ID, String.valueOf(movie_id)).build();
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
         }
 
     }
@@ -106,9 +104,9 @@ public class MovieContract {
         // site
         public static final String COLUMN_SITE = "site";
 
-        // Uri for trailer?movie_id=[id]
+        // Uri for trailer/[movie_id]
         public static Uri buildTrailerWithId(int movie_id) {
-            return CONTENT_URI.buildUpon().appendQueryParameter(MOVIE_ID, String.valueOf(movie_id)).build();
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
         }
     }
 
@@ -135,9 +133,9 @@ public class MovieContract {
         // content
         public static final String COLUMN_CONTENT = "content";
 
-        // Uri for review?movie_id=[id]
+        // Uri for review/[movie_id]
         public static Uri buildReviewWithId(int movie_id) {
-            return CONTENT_URI.buildUpon().appendQueryParameter(MOVIE_ID, String.valueOf(movie_id)).build();
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
         }
     }
 
@@ -158,9 +156,9 @@ public class MovieContract {
         // movie_id
         public static final String COLUMN_MOVIE_ID = "movie_id";
 
-        // Uri for favorite?movie_id=[id]
+        // Uri for favorite/[movie_id]
         public static Uri buildFavoriteWithId(int movie_id) {
-            return CONTENT_URI.buildUpon().appendQueryParameter(MOVIE_ID, String.valueOf(movie_id)).build();
+            return ContentUris.withAppendedId(CONTENT_URI, movie_id);
         }
     }
 }
